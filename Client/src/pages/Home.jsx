@@ -18,6 +18,13 @@ const Home = () => {
 
   useEffect(() => {
     fetchPdfData();
+     // Clean up the interval and handle unload
+     window.addEventListener("beforeunload", () => {
+      // Send a request to the server to clear the data
+      axios.get('http://localhost:5000/api/clearData')
+        .then((res) => console.log(res.data))
+        .catch((error) => console.error('Error clearing data:', error));
+    });
   },[isClicked]);
 
   
