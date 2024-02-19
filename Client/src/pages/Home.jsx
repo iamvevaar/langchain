@@ -1,11 +1,32 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Radios from "../component/Radios";
 
 const Home = () => {
   const [file, setFile] = useState(null);
   const [pdfData, setPdfData] = useState(null);
-
   const [isClicked, setIsClicked] = useState(false);
+
+  const [language, setLanguage] = useState("Hindi");
+  const [data, setData] = useState(null);
+
+  const [translatedData, setTranslatedData] = useState(null);
+
+  const options = [
+    { value: "Hindi", label: "Hindi" },
+    { value: "Gujarati", label: "Gujarati" },
+    { value: "Tamil", label: "Tamil" },
+    { value: "Telugu", label: "Telugu" },
+    { value: "Bengali", label: "Bengali" },
+    { value: "Marathi", label: "Marathi" },
+    { value: "Punjabi", label: "Punjabi" },
+  ];
+
+  const handleLanguageChange = (selectedOption) => {
+    setLanguage(selectedOption);
+  };
+  console.log(language)
+
 
   const fetchPdfData = async () => {
     try {
@@ -16,6 +37,19 @@ const Home = () => {
     }
   };
 
+  const fetchTranlatedData = async () => { 
+    try {
+      const response = await axios.get("http://localhost:5000/api/getTranslatedData");
+      setTranslatedData(response.data);
+    } catch (error) {
+      console.error("Error fetching PDF data:", error);
+    }
+  
+  }
+  useEffect(() => {
+    fetchTranlatedData();
+  }, [translatedData]);
+
   useEffect(() => {
     fetchPdfData();
      // Clean up the interval and handle unload
@@ -24,6 +58,11 @@ const Home = () => {
       axios.get('http://localhost:5000/api/clearData')
         .then((res) => console.log(res.data))
         .catch((error) => console.error('Error clearing data:', error));
+
+      axios.get('http://localhost:5000/api/clearTranslatedData')
+        .then((res) => console.log(res.data))
+        .catch((error) => console.error('Error clearing data:', error));
+      
     });
   },[isClicked]);
 
@@ -48,11 +87,25 @@ const Home = () => {
     }finally{
       setIsClicked(!isClicked);
     }
+    {console.log(data)}
   };
 
-  const handleTranslation = (e) => {
+  const handleTranslation = () => {
     console.log("first");
-    console.log(e.target.value);
+    axios
+      .post("http://localhost:5000/api/sendData", {
+        text: data,
+        language: language,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .then(() => {
+        fetchTranlatedData();
+      })
+      .catch((error) => {
+        console.error("Error translating text:", error);
+      });
   };
 
   return (
@@ -70,6 +123,11 @@ const Home = () => {
       </button>
       <p>Uploaded file: {file ? file.name : "None"}</p>
 
+      <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange}/>
+      <p>Selected Language :{language}</p>
+
+      {translatedData && <p>{translatedData}</p>}
+
       {pdfData &&
         pdfData.map((doc, index) => (
           <div key={index}>
@@ -79,11 +137,13 @@ const Home = () => {
             </h1>{" "}
             <button
               onClick={(e) => {
-                handleTranslation;
+                handleTranslation(e);
+                setData(doc.pageContent);
               }}
             >
               Translator
             </button>
+            {console.log(data)}
             <p>{doc.pageContent}</p>
           </div>
         ))}
