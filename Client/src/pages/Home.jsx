@@ -1,16 +1,49 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Radios from "../component/Radios";
+import { useLocation } from "react-router-dom";
+import { getAuth, signOut } from 'firebase/auth';
+import { app } from '../authentication/Firebase';
+
+const auth = getAuth(app);
 
 const Home = () => {
   const [file, setFile] = useState(null);
   const [pdfData, setPdfData] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
+  const [count, setCount] = useState(0);
 
   const [language, setLanguage] = useState("Hindi");
   const [data, setData] = useState(null);
 
   const [translatedData, setTranslatedData] = useState(null);
+
+  const location = useLocation()
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('hasVisitedHome');
+    if (!hasVisited) {
+      localStorage.setItem('hasVisitedHome', true);
+      const savedCount = localStorage.getItem('count');
+      if (savedCount) {
+        setCount(parseInt(savedCount));
+      }
+    } else {
+      const savedCount = location.state ? location.state.count : 0;
+      setCount(savedCount);
+    }
+  }, [location.state]);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("User signed out successfully");
+        localStorage.clear(); // Clear localStorage
+        window.location.href = '/Login'; // Redirect to logout page
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error.message);
+      });
+  };
 
   const options = [
     { value: "Hindi", label: "Hindi" },
@@ -37,14 +70,14 @@ const Home = () => {
     }
   };
 
-  const fetchTranlatedData = async () => { 
+  const fetchTranlatedData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/getTranslatedData");
       setTranslatedData(response.data);
     } catch (error) {
       console.error("Error fetching PDF data:", error);
     }
-  
+
   }
   useEffect(() => {
     fetchTranlatedData();
@@ -52,8 +85,8 @@ const Home = () => {
 
   useEffect(() => {
     fetchPdfData();
-     // Clean up the interval and handle unload
-     window.addEventListener("beforeunload", () => {
+    // Clean up the interval and handle unload
+    window.addEventListener("beforeunload", () => {
       // Send a request to the server to clear the data
       axios.get('http://localhost:5000/api/clearData')
         .then((res) => console.log(res.data))
@@ -62,11 +95,10 @@ const Home = () => {
       axios.get('http://localhost:5000/api/clearTranslatedData')
         .then((res) => console.log(res.data))
         .catch((error) => console.error('Error clearing data:', error));
-      
-    });
-  },[isClicked]);
 
-  
+    });
+  }, [isClicked]);
+
 
   const handleUpload = async (e) => {
     const formData = new FormData();
@@ -81,13 +113,13 @@ const Home = () => {
         .then(() => {
           fetchPdfData();
         });
-        ;
+      ;
     } catch (error) {
       console.error(error);
-    }finally{
+    } finally {
       setIsClicked(!isClicked);
     }
-    {console.log(data)}
+    { console.log(data) }
   };
 
   const handleTranslation = () => {
@@ -110,6 +142,9 @@ const Home = () => {
 
   return (
     <div>
+      <div>
+        <p>your free trial chance : {count}</p>
+      </div>
       <p>Welcome To Langchain</p>
       {console.log("hello saab")}
 
@@ -123,7 +158,7 @@ const Home = () => {
       </button>
       <p>Uploaded file: {file ? file.name : "None"}</p>
 
-      <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange}/>
+      <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange} />
       <p>Selected Language :{language}</p>
 
       {translatedData && <p>{translatedData}</p>}
@@ -147,6 +182,9 @@ const Home = () => {
             <p>{doc.pageContent}</p>
           </div>
         ))}
+        <div>
+        <button onClick={handleLogout}>Logout</button>
+        </div>
     </div>
   );
 };
