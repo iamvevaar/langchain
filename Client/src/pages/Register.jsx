@@ -12,15 +12,21 @@ function Register() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
+  const isEmailValid = (email) => {
+    // Regular expression for basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const signUp = async (e) => {
     e.preventDefault();
     try {
-      if (email.length > 0 && password.length > 0) {
+      if (email.length > 0 && password.length > 0 && isEmailValid(email)) {
         await createUserWithEmailAndPassword(auth, email, password);
         console.log('User created successfully');
         navigate("/Home");
       } else {
-        alert("Please enter all details");
+        alert("Please enter a valid email and password");
       }
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {

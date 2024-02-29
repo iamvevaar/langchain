@@ -19,15 +19,22 @@ function Login() {
   const navigate = useNavigate();
 
 
+  
+  const validateEmail = (email) => {
+    // Regular expression for basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const signIn = async (e) => {
     e.preventDefault();
     try {
-      if (email.length > 0 && password.length > 0) {
+      if (validateEmail(email) && password.length > 0) {
         await signInWithEmailAndPassword(auth, email, password);
         console.log('User signed in successfully');
         navigate("/Home");
       } else {
-        showCustomErrorToast("Please enter email and password!");
+        showCustomErrorToast("Please enter a valid email and password!");
       }
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
