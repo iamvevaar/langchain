@@ -32,18 +32,20 @@ const Home = () => {
       setCount(savedCount);
     }
   }, [location.state]);
-
   const handleLogout = () => {
+    const user = auth.currentUser;
+    const userEmail = user ? user.email : 'Unknown';
     signOut(auth)
       .then(() => {
-        console.log("User signed out successfully");
-        localStorage.clear(); // Clear localStorage
-        window.location.href = '/Login'; // Redirect to logout page
+        console.log(`User ${userEmail} signed out successfully`);
+        localStorage.clear();
+        window.location.href = '/Login';
       })
       .catch((error) => {
         console.error("Error signing out:", error.message);
       });
   };
+
 
   const options = [
     { value: "Hindi", label: "Hindi" },
@@ -182,9 +184,9 @@ const Home = () => {
             <p>{doc.pageContent}</p>
           </div>
         ))}
-        <div>
+      <div>
         <button onClick={handleLogout}>Logout</button>
-        </div>
+      </div>
     </div>
   );
 };
