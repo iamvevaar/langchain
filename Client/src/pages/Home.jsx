@@ -38,14 +38,14 @@ const Home = () => {
     signOut(auth)
       .then(() => {
         console.log(`User ${userEmail} signed out successfully`);
-        localStorage.clear(); 
+        localStorage.clear();
         window.location.href = '/Login';
       })
       .catch((error) => {
         console.error("Error signing out:", error.message);
       });
   };
-  
+
 
   const options = [
     { value: "Hindi", label: "Hindi" },
@@ -184,9 +184,9 @@ const Home = () => {
             <p>{doc.pageContent}</p>
           </div>
         ))}
-        <div>
+      <div>
         <button onClick={handleLogout}>Logout</button>
-        </div>
+      </div>
     </div>
   );
 };

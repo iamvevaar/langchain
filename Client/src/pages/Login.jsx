@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { showCustomErrorToast } from '../component/CustomToast';
 import sideimage from '../assets/121Bg.png'
-//core components
 import { app } from '../authentication/Firebase';
 import '../index.css';
 const auth = getAuth(app);
@@ -19,7 +18,7 @@ function Login() {
   const navigate = useNavigate();
 
 
-  
+
   const validateEmail = (email) => {
     // Regular expression for basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -81,7 +80,7 @@ function Login() {
             <div className="col-12 col-md-6" style={{ flexGrow: 2 }}>
               <div className="mt-5 px-3">
                 <div className="mb-4 text-center">
-                  <h1 style={{ fontFamily: "times", fontSize: "3rem", fontWeight: "500" , color:"black"}}>Vevaar</h1>
+                  <h1 style={{ fontFamily: "times", fontSize: "3rem", fontWeight: "500", color: "black" }}>Vevaar</h1>
                 </div>
 
                 <form onSubmit={signIn}>
@@ -105,7 +104,7 @@ function Login() {
                   </div>
                   <div className="col-12 d-flex gap-2 flex-column justify-content-center mt-3 mt-md-5 text-center">
                     <a href='/Register' className="link-secondary text-decoration-none">Does Not Have an Account Yet? Register</a>
-                    <label style={{ marginTop: 10, backgroundColor: 'white', color: 'black'}} type="button" onClick={signInWithGoogle}>
+                    <label style={{ marginTop: 10, backgroundColor: 'white', color: 'black' }} type="button" onClick={signInWithGoogle}>
                       <FaGoogle />
                     </label>
                   </div>

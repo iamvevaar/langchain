@@ -55,12 +55,12 @@ function Register() {
     <div className="signup-container">
       <h2>Sign Up</h2>
       <form onSubmit={signUp}>
-        <input placeholder='Email' type='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
-        <input placeholder='Password' type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+        <input placeholder='Email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input placeholder='Password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
         <button type="submit">Sign Up</button>
-        <button style={{margin:10,backgroundColor:'white',color:'black'}} type="button" onClick={signUpWithGoogle}>
+        <button style={{ margin: 10, backgroundColor: 'white', color: 'black' }} type="button" onClick={signUpWithGoogle}>
           Continue with Google
-          </button>
+        </button>
         <p style={{ fontSize: 18 }}>Already have an account! <a href='/Login'>Login</a></p>
         <p>{message}</p>
       </form>

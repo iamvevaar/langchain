@@ -6,7 +6,7 @@ function Splash() {
     const navigate = useNavigate();
     const [selectedLanguage, setSelectedLanguage] = useState('lang');
     const [count, setCount] = useState(0);
-    const [buttonDisabled, setButtonDisabled] = useState(true); // State to manage button disabled/enabled
+    const [buttonDisabled, setButtonDisabled] = useState(true); 
 
     useEffect(() => {
         const hasVisited = localStorage.getItem('hasVisitedSplash');
@@ -45,7 +45,7 @@ function Splash() {
             <h1>Welcome to Vevaar!</h1>
             <h4 style={{ color: "white" }}>Shabdo ka saar hai vevaar...</h4>
             <select value={selectedLanguage} onChange={handleLanguageChange} className="card-deck-dropdown">
-                <option value="lang" selected>Select Language</option>
+                <option value="lang">Select Language</option>
                 <option value="en">English</option>
                 <option value="es">Spanish</option>
             </select>
