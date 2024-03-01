@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import image from '../assets/Frame.png';
+import image from '../../assets/Frame.png';
+import './splash.css';
 
-function Splash() {
+const Splash = () => {
     const navigate = useNavigate();
     const [selectedLanguage, setSelectedLanguage] = useState('lang');
     const [count, setCount] = useState(0);
-    const [buttonDisabled, setButtonDisabled] = useState(true); 
+    const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
         const hasVisited = localStorage.getItem('hasVisitedSplash');

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Radios from "../component/Radios";
+import Radios from "../../component/Radios";
 import { useLocation } from "react-router-dom";
 import { getAuth, signOut } from 'firebase/auth';
-import { app } from '../authentication/Firebase';
+import { app } from '../../authentication/Firebase';
 
 const auth = getAuth(app);
 
