@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { showCustomErrorToast } from '../component/CustomToast';
-import sideimage from '../assets/121Bg.png'
-import { app } from '../authentication/Firebase';
-import '../index.css';
+import { showCustomErrorToast } from '../../component/CustomToast';
+import sideimage from '../../assets/121Bg.png'
+import { app } from '../../authentication/Firebase';
+import './login.css';
 const auth = getAuth(app);
-import CustomWave from '../component/CustomWave';
+import CustomWave from '../../component/CustomWave';
 import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Login() {

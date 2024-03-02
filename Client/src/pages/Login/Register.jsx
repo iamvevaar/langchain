@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { getAuth,createUserWithEmailAndPassword,signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { showCustomErrorToast } from '../component/CustomToast';
+import { showCustomErrorToast } from '../../component/CustomToast';
 //core components
-import { app } from '../authentication/Firebase';
-import '../index.css';
+import { app } from '../../authentication/Firebase';
+import './login.css';
 const auth = getAuth(app);
-import CustomWave from '../component/CustomWave';
+import CustomWave from '../../component/CustomWave';
 import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Register() {
@@ -53,9 +53,9 @@ function Register() {
   };
 
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  // const togglePasswordVisibility = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
   return (
     <div className="container-fluid h-100 d-flex justify-content-center align-items-center">
@@ -69,19 +69,18 @@ function Register() {
 
             <form onSubmit={signUp}>
               <div className="row gy-3 px-5">
-                {/* <div className="col-12 mb-2">
-                <input placeholder='Name' className="form-control" type='name' value={name} onChange={(e) => setName(e.target.value)} />
-              </div> */}
+
                 <div className="col-12 mb-2">
                   <input placeholder='Email' className="form-control" type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
 
-                <div className="col-12 mb-2 position-relative">
+                <div className="col-12 mb-2 password-wrapper">
                   <input type={showPassword ? "text" : "password"} className="form-control" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                  <button type="button" className="btn position-absolute top-0 end-0" onClick={togglePasswordVisibility} style={{ marginTop: "12px", marginRight: "10px", background: "none" }}>
-                    {showPassword ? <FaEyeSlash style={{ color: 'white' }} /> : <FaEye style={{ color: 'white' }} />}
-                  </button>
+                  {/* <button type="button" className="password-toggle-btn" onClick={togglePasswordVisibility}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button> */}
                 </div>
+
 
                 <div className="col-12">
                   <div className="d-grid">

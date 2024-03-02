@@ -1,0 +1,110 @@
+/* -------------Login Page ---------- */
+.btn {
+  background-color: #224957;
+  color: white;
+  padding: 12px 23px;
+  font-size: 18px;
+  border-radius: 12px;
+  /* border: 1px solid transparent; */
+}
+
+.form {
+  border: 2px solid rgb(255, 255, 255);
+  box-shadow: 0px 0px 19px 0px rgba(50, 50, 50, 0.408);
+  padding: 8px 15px;
+  border-radius: 15px;
+}
+
+.form-label {
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.form-control {
+  background-color: #224957;
+  color: white;
+  padding: 12px 23px;
+  font-size: 20px;
+  border-radius: 13px;
+  border: 1px solid transparent; /* Add a border to ensure consistency */
+}
+
+.form-control::placeholder {
+  color: white;
+  opacity: 80%;
+}
+
+.form-control:focus {
+  outline: none;
+  color: white;
+  border-color: none;
+  box-shadow: none;
+  background-color: #224957;
+}
+
+.form-check-input {
+  background-color: #224957;
+}
+
+.scale-up-animation {
+  animation: scaleUp 2s ease-out forwards;
+}
+@keyframes scaleUp {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.pulse-button-animation {
+  animation: pulseAnimation 2s ease forwards;
+}
+
+@keyframes pulseAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .px-5 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+input.form-control,
+button.btn {
+  font-size: 1em; /* Adjust based on preference */
+}
+
+/* Consider adjusting padding and margins for smaller screens */
+@media (max-width: 767.98px) {
+  input.form-control,
+  button.btn {
+    padding: 10px; /* Example adjustment */
+  }
+}
+
+/* Hide the side image on screens smaller than 768px */
+@media (max-width: 767.98px) {
+  .d-none.d-md-block {
+    display: none !important;
+  }
+}
+
+/* Adjust the side image size on medium devices */
+@media (max-width: 991.98px) {
+  img.scale-up-animation {
+    height: auto;
+    width: 100%;
+    margin-left: 0;
+  }
+}

@@ -1,9 +1,9 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Home from './pages/Home';
-import Splash from './pages/Splash';
+import Login from './pages/Login/Login';
+import Register from './pages/Login/Register';
+import Home from './pages/Home/Home';
+import Splash from './pages/SplashScreen/Splash';
 function App() {
   return (
     <Router>
