@@ -42,15 +42,15 @@ function Splash() {
             <div>
                 <span style={{ color: "white" }}>Your free trial count: {count}</span>
             </div>
-            <h1>Welcome to Vevaar!</h1>
-            <h4 style={{ color: "white" }}>Shabdo ka saar hai vevaar...</h4>
+            <h1>Welcome to Vevaar!</h1> <br />
+            <h4 style={{ color: "white" }}>Shabdo ka saar hai vevaar...</h4> <br />
             <select value={selectedLanguage} onChange={handleLanguageChange} className="card-deck-dropdown">
                 <option value="lang">Select Language</option>
                 <option value="en">English</option>
                 <option value="es">Spanish</option>
             </select>
-
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 15 }}>
+            <br />
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
                 <button disabled={buttonDisabled} className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={handleCount}>Free Trial</button>
             </div>
         </div>

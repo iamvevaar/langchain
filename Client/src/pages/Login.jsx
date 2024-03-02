@@ -60,9 +60,9 @@ function Login() {
   };
 
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  // const togglePasswordVisibility = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
   return (
     <div className="container-fluid h-90">
@@ -71,7 +71,6 @@ function Login() {
         <div className="col-12">
           <section className="p-4 p-md-5 p-xl-5" style={{ minHeight: "90vh", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
 
-            {/* Image Container Adjusted Inside the Section */}
             <div className="col-md-4 d-none d-md-block" style={{ flexGrow: 1 }}>
               <img src={sideimage} alt="" className="scale-up-animation" style={{ objectFit: "cover", height: "500px", width: "900px", marginLeft: "-25rem" }} />
 
@@ -91,9 +90,9 @@ function Login() {
 
                     <div className="col-12 mb-2 position-relative ">
                       <input type={showPassword ? "text" : "password"} className="form-control" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                      <button type="button" className="btn position-absolute top-0 end-0" onClick={togglePasswordVisibility} style={{ marginTop: "12px", marginRight: "10px", background: "none" }}>
+                      {/* <button type="button" className="btn position-absolute end-0" onClick={togglePasswordVisibility} style={{ marginTop: "12px", marginRight: "10px", background: "none" }}>
                         {showPassword ? <FaEyeSlash style={{ color: 'white' }} /> : <FaEye style={{ color: 'white' }} />}
-                      </button>
+                      </button> */}
                     </div>
 
                     <div className="col-12">
