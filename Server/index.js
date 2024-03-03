@@ -1,4 +1,3 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 dotenv.config();
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
@@ -57,16 +56,16 @@ app.get("/api/getData", (req, res) => {
 });
 
 // New endpoint to clear the docs variable
-app.get("/api/clearData", (req, res) => {
-  docs = new Array();
-  return res.send("Data cleared successfully");
-});
+// app.get("/api/clearData", (req, res) => {
+//   docs = new Array();
+//   return res.send("Data cleared successfully");
+// });
 
-app.get("/api/clearTranslatedData", (req, res) => {
-    text = new String();
-    return res.send("Data cleared successfully");
-});
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+// app.get("/api/clearTranslatedData", (req, res) => {
+//     text = new String();
+//     return res.send("Data cleared successfully");
+// });
+// const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 app.use(bodyParser.json());
 
