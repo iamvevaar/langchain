@@ -10,7 +10,8 @@ import Dashboard from './pages/Dashboard/Dashboard.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
     {/* <Home/> */}
-    <Dashboard/>
+    {/* <Dashboard/> */}
+    <Ask/>
   </>
   
 )

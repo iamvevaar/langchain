@@ -1,37 +1,74 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import React, { useState } from 'react'
+import { FileUploader } from "react-drag-drop-files";
+import './ask.css'
+
+const fileTypes = ["PDF"];
 
 const Ask = () => {
-    const [postData, setPostData] = useState("");
+  const [file, setFile] = useState(null);
+  const [question, setQuestion] = useState("");
+  const [answers, setAnswers] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.post('https://t8ey87nhw3.execute-api.us-east-1.amazonaws.com/dev/translate', {
-                    text: 'New Post',
-                    lang: 'fr',
-                });
-                console.log(response.data)
-                setPostData(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+  const handleChange = (file) => {
+    const formData = new FormData();
+    setFile(file);
+    formData.append("fileName", file);
+    try {
+      axios
+        .post("http://localhost:9001/upload", formData)
+        .then((res) => res.data)
+        .then((data) => {
+          console.log(data);
+        })
+        ;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-        fetchData();
-    }, []);
+  const postQuestionHandler = async () => {
+    try {
+      const response = await fetch("http://localhost:9001/api/setQuestions", {
+        method: "POST",
+        headers: {
+          'Content-Type': "application/json"
+        },
+        body: JSON.stringify({ question })
+      });
+      // Handle the response as needed
+      const result = await response.json();
+      console.log(result);
 
-    return (
+      // Update the state with the received answer
+      setAnswers(prevAnswers => [...prevAnswers, result.answer.text]);
+    } catch (error) {
+      console.error('Error posting question:', error);
+    }
 
-        <div>
-            {console.log(postData)}
-            {postData && (
-                <div>
-                    <h1>{postData}</h1>
-                </div>
-            )}
+  }
+
+  return (
+    <div className='main'>
+      <div className='fileBox'>
+        <FileUploader className="demo" handleChange={handleChange} name="file" types={fileTypes} />
+        <p>{file ? `File name: ${file.name}` : "Not A file Selected Yet"}</p>
+      </div>
+      <div className='questionBox'>
+        <input type="text" onChange={(e) => setQuestion(e.target.value)} value={question} placeholder='Ask Your Question' disabled={!file} />
+        <button onClick={postQuestionHandler} disabled={!question}>Go</button>
+      </div>
+
+      {/* Display all the answers */}
+      {answers.length > 0 && (
+        <div className='answerBox'>
+          {answers.map((answer, index) => (
+            <div className='eachAns' key={index}>Answer {index + 1}: {answer}</div>
+          ))}
         </div>
-    );
-};
+      )}
+    </div>
+  );
+}
 
-export default Ask;
+export default Ask
