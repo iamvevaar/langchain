@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FileUploader } from "react-drag-drop-files";
 import './ask.css'
 import { useTranslation, initReactI18next } from 'react-i18next'
 import i18n from '../../configuration/i18n';
+import { FaArrowUp } from 'react-icons/fa';
 
 const fileTypes = ["PDF"];
 

@@ -74,7 +74,7 @@ const Dashboard = () => {
   const handleTranslation = async (content) => {
     console.log("am i clicked")
     try {
-      const response = await axios.post('https://t8ey87nhw3.execute-api.us-east-1.amazonaws.com/dev/translate', {
+      const response = await axios.post('https://3g14us5zoa.execute-api.us-east-1.amazonaws.com/dev/translate', {
         text: content,
         lang: language,
       });
@@ -130,6 +130,11 @@ const Dashboard = () => {
       <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange} />
       <p>{t('Selected Language :')}{language}</p>
 
+      {translatedData && <div>
+        <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
+      </div>
+      }
+
       {pdfData &&
         pdfData.map((doc, index) => (
           <div key={index}>
@@ -153,10 +158,7 @@ const Dashboard = () => {
           </div>
         ))}
 
-      {translatedData && <div>
-        <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
-      </div>
-      }
+     
       <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Ask')}>Submit</button>
       <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Login')}>Submit</button>
       <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate("/Register")}>Submit</button>
