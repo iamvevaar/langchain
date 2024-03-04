@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState , useRef } from 'react'
+import { jsPDF } from "jspdf";
 import Radios from '../../component/Radios';
 
 const Dashboard = () => {
@@ -76,6 +77,20 @@ const Dashboard = () => {
     }
   };
 
+  const donwnloadHandler = (data) => {
+    console.log("download handler")
+    const jspdf = new jsPDF();
+    const value = data;
+    console.log(value)
+    const main = {
+      callback: function (jspdf) {
+        jspdf.save("translated.pdf");
+      },
+      autoPaging:'text'
+    }
+    jspdf.html(value,main);
+  }
+
   // function convertToSingleLineString(multiLineString) {
   //   return multiLineString.replace(/\n/g, ' ').trim();
   // }
@@ -123,6 +138,7 @@ const Dashboard = () => {
             >
               Translator
             </button>
+            <button onClick={()=>{donwnloadHandler(doc.pageContent)}}>Download</button>
             {/* <p>{doc.pageContent}</p> */}
             <div dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '<br/>') }} />
           </div>
