@@ -5,6 +5,7 @@ import Register from './pages/Login/Register';
 import Splash from './pages/SplashScreen/Splash';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Ask from './pages/Ask/Ask';
+
 function App() {
   return (
     <Router>

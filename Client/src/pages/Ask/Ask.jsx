@@ -2,13 +2,18 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { FileUploader } from "react-drag-drop-files";
 import './ask.css'
+import {useTranslation,initReactI18next} from 'react-i18next'
+import i18n from '../../configuration/i18n';
 
 const fileTypes = ["PDF"];
+
+initReactI18next.init(i18n)
 
 const Ask = () => {
   const [file, setFile] = useState(null);
   const [question, setQuestion] = useState("");
   const [answers, setAnswers] = useState([]);
+  const {t} = useTranslation()
 
   const handleChange = (file) => {
     const formData = new FormData();
@@ -52,18 +57,16 @@ const Ask = () => {
     <div className='main'>
       <div className='fileBox'>
         <FileUploader className="demo" handleChange={handleChange} name="file" types={fileTypes} />
-        <p>{file ? `File name: ${file.name}` : "Not A file Selected Yet"}</p>
+        <p>{file ? `${t('Uploaded file:')} ${file.name}` : t('Not A file Selected Yet')}</p>
       </div>
       <div className='questionBox'>
-        <input type="text" onChange={(e) => setQuestion(e.target.value)} value={question} placeholder='Ask Your Question' disabled={!file} />
-        <button onClick={postQuestionHandler} disabled={!question}>Go</button>
+        <input type="text" onChange={(e) => setQuestion(e.target.value)} value={question} placeholder={t('Ask Your Question')} disabled={!file} />
+        <button onClick={postQuestionHandler} disabled={!question}>{t('Go')}</button>
       </div>
-
-      {/* Display all the answers */}
       {answers.length > 0 && (
         <div className='answerBox'>
           {answers.map((answer, index) => (
-            <div className='eachAns' key={index}>Answer {index + 1}: {answer}</div>
+            <div className='eachAns' key={index}>{t('Answer')} {index + 1}: {answer}</div>
           ))}
         </div>
       )}

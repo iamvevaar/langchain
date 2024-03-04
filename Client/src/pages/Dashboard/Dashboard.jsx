@@ -1,9 +1,17 @@
 import axios from 'axios';
-import React, { useEffect, useState , useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { jsPDF } from "jspdf";
 import Radios from '../../component/Radios';
+import i18n from '../../configuration/i18n'
+import { useTranslation, initReactI18next } from 'react-i18next'
+import { useNavigate } from 'react-router-dom';
+
+initReactI18next.init(i18n)
 
 const Dashboard = () => {
+
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [file, setFile] = useState(null);
   const [pdfData, setPdfData] = useState(null);
@@ -84,11 +92,11 @@ const Dashboard = () => {
     console.log(value)
     const main = {
       callback: function (jspdf) {
-        jspdf.save("translated.pdf");
+        jspdf.save(t("translated.pdf"));
       },
-      autoPaging:'text'
+      autoPaging: 'text'
     }
-    jspdf.html(value,main);
+    jspdf.html(value, main);
   }
 
   // function convertToSingleLineString(multiLineString) {
@@ -105,7 +113,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <p>Welcome To Langchain</p>
+      <p>{t('Welcome To Langchain')}</p>
       {console.log("hello saab")}
 
       <input
@@ -114,31 +122,31 @@ const Dashboard = () => {
         onChange={(e) => setFile(e.target.files[0])}
       />
       <button type="button" onClick={handleUpload}>
-        Upload
+        {t('Upload')}
       </button>
-      <p>Uploaded file: {file ? file.name : "None"}</p>
+      <p>{t('Uploaded file:')} {file ? file.name : "None"}</p>
 
       <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange} />
-      <p>Selected Language :{language}</p>
+      <p>{t('Selected Language :')}{language}</p>
 
       {pdfData &&
         pdfData.map((doc, index) => (
           <div key={index}>
             <h1>
-              Current Page Number {doc.metadata.loc.pageNumber} /{" "}
+              {t('Current Page Number')} {doc.metadata.loc.pageNumber} /{" "}
               {doc.metadata.pdf.totalPages}
             </h1>{" "}
             <button ref={btnTransRef}
               onClick={() => {
                 handleTranslation(doc.pageContent);
                 setData(doc.pageContent)
-                {data}
+                { data }
                 console.log("btnTanshoo mein")
               }}
             >
-              Translator
+              {t('Translator')}
             </button>
-            <button onClick={()=>{donwnloadHandler(doc.pageContent)}}>Download</button>
+            <button onClick={() => { donwnloadHandler(doc.pageContent) }}>{t('Download')}</button>
             {/* <p>{doc.pageContent}</p> */}
             <div dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '<br/>') }} />
           </div>
@@ -148,7 +156,9 @@ const Dashboard = () => {
         <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
       </div>
       }
-
+      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Ask')}>Submit</button>
+      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Login')}>Submit</button>
+      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate("/Register")}>Submit</button>
 
     </div>
   )
