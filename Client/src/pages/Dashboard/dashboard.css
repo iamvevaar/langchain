@@ -1,0 +1,82 @@
+.button {
+  background-color: #20df7f;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px 9px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0px 15px 10px -15px #111;
+}
+
+.button:hover {
+  background-color: #00763b;
+  color: white;
+}
+.button:disabled {
+  background: #ccc; 
+  cursor: not-allowed;
+}
+
+.button:disabled:hover {
+  background: #ccc; 
+}
+
+
+.custom-heading {
+  font-size: 4rem;
+  letter-spacing: 0.5rem;
+  font-family: "Times New Roman";
+  font-weight: bolder;
+  color: #e3052d;
+  font-style: italic;
+  text-shadow: 2px 2px #aaaaaa;
+}
+
+.custom-heading-p {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 300;
+  color: #222;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  overflow: hidden; 
+  white-space: nowrap; 
+  position: relative; 
+  width: 37rem;
+  margin-left: -4rem;
+}
+
+.custom-heading-p.animate::after {
+  content: "";
+  position: block ;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* Match the background to effectively "hide" the text initially */
+  animation: revealText 3s ease forwards; /* Animation name, duration, easing, and fill mode */
+}
+
+@keyframes revealText {
+  from {
+    left: 0;
+    width: 100%;
+  }
+  to {
+    left: 100%;
+    width: 0;
+  }
+}
+
+/* Retaining your existing styles for the decorative lines */
+.custom-heading-p:before {
+  content: " ";
+  display: block;
+  border-bottom: 1px solid #c50000;
+  border-top: 1px solid #c50000;
+  height: 5px;
+  background-color: #f8f8f8;
+}
+
+

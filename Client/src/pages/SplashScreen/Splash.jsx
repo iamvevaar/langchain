@@ -37,7 +37,7 @@ const Splash = () => {
     }, []);
 
     return (
-        <div style={{ height: "41.9rem", width: "100%", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ height: "41.9rem", width: "100%", display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop:"4rem"}}>
 
             <img src={image} alt="Description" style={{ width: '18rem', height: "18rem" }} />
             <div>

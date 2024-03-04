@@ -48,21 +48,29 @@ function Login() {
   };
 
 
+  // const signInWithGoogle = async () => {
+  //   try {
+  //     const provider = new GoogleAuthProvider();
+  //     const result = await signInWithPopup(auth, provider);
+  //     console.log('User signed in with Google successfully', result.user);
+  //     navigate("/Dashboard");
+  //   } catch (error) {
+  //     showCustomErrorToast('Error signing in with Google: ' + error.message);
+  //   }
+  // };
+
   const signInWithGoogle = async () => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       console.log('User signed in with Google successfully', result.user);
-      navigate("/Home");
+      // Store user information in localStorage
+      localStorage.setItem('user', JSON.stringify(result.user));
+      navigate("/Dashboard");
     } catch (error) {
       showCustomErrorToast('Error signing in with Google: ' + error.message);
     }
   };
-
-
-  // const togglePasswordVisibility = () => {
-  //   setShowPassword(!showPassword);
-  // };
 
   return (
     <div className="container-fluid h-90">

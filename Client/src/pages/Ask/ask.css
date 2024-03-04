@@ -1,55 +1,114 @@
-.main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 20px;
 }
 
+.fileBox {
+  position: fixed;
+}
 
-.questionBox{
-    z-index: 10;
-    margin-bottom: 24px;
-    padding: 8px;
-    position: fixed;
-    bottom: 0;
-    width: 80vh;
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-    justify-content: center;
-    background-color: rgb(211, 211, 233);
+.questionBox {
+  z-index: 10;
+  margin-bottom: 24px;
+  padding: 8px;
+  position: fixed;
+  bottom: 0;
+  width: 80%; /* Changed from 80vh to 80% for better responsiveness */
+  max-width: 600px; /* You can adjust this value based on your design needs */
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  background-color: rgb(211, 211, 233);
+  border-radius: 8px;
 }
 
 .questionBox > input {
-    height: 32px;
-    width: 80%;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    padding-left: 16px;
+  height: 32px;
+  width: 100%;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  padding-left: 16px;
 }
 
-.answerBox{
-    z-index: 0;
-    /* position: fixed; */
-    top: 400px;
-    margin-bottom: 24px;
-    padding: 8px;
-    /* height: 50px; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    justify-content: center;
+.questionBox > .btn {
+  background-color: #20df7f;
+  color: white;
+  padding: 4px 10px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0px 15px 10px -15px #111;
 }
 
-.eachAns{
-    background-color: rgb(211, 211, 233);
-    width: 80vh;
-    border-radius: 8px;
+.answerBox {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  top: 9rem; /* Adjust if necessary */
+  left: 50%; /* Center align */
+  transform: translateX(-50%); /* Center align */
+  bottom: 5.5rem;
+  gap: 20px;
+  overflow-y: auto;
+  max-height: calc(
+    100vh - 150px
+  ); 
+  width: 40%; /* Use percentage for responsiveness */
+  padding-bottom: 80px;
+  /* Hide scrollbar but allow scrolling */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
 
+.answerBox::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
 
+.eachAns {
+  background-color: rgb(211, 211, 233);
+  border-radius: 8px;
+  padding: 10px; /* Add some padding */
+  width: 100%; /* Full width of the parent container */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .answerBox {
+    top: 7rem; /* Adjust top position for smaller screens */
+    width: 90%; /* Increase width to use more of the screen on smaller devices */
+    bottom: 4rem; /* Adjust bottom position as needed */
+  }
+}
+
+@media (max-width: 480px) {
+  .answerBox {
+    top: 6rem; /* Adjust top position for very small screens */
+    width: 95%; /* Further increase width for very small devices */
+    bottom: 3rem; /* Further adjust bottom position as needed */
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .questionBox,
+  .eachAns {
+    width: 95%; /* Increase width to use more of the screen on smaller devices */
+    max-width: none; /* Removing max-width on smaller screens for full width usage */
+  }
+}
+
+@media (max-width: 480px) {
+  .questionBox > input,
+  .eachAns {
+    width: 90%; /* Optional: Adjusting width inside questionBox for better spacing */
+  }
 }

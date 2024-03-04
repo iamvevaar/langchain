@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import './Custom.css';
 
 const Radios = ({ options, selectedOption, onOptionChange }) => {
 
   return (
-    <div>
+    <div  className="radioOptionsContainer">
       {options.map((option) => (
         <div key={option.value}>
           <input

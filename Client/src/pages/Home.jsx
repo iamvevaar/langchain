@@ -1,174 +1,119 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Radios from "../component/Radios";
+import React, { useState } from "react";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import { CgGitFork } from "react-icons/cg";
+// import { ImBlog } from "react-icons/im";
+import { AiFillStar, AiOutlineHome, AiOutlineFundProjectionScreen, AiOutlineUser, } from "react-icons/ai";
+import { CgFileDocument } from "react-icons/cg";
+import { Link } from "react-router-dom";
 
-const Home = () => {
-  const [file, setFile] = useState(null);
-  const [pdfData, setPdfData] = useState(null);
-  const [isClicked, setIsClicked] = useState(false);
+function Home() {
+  const [expand, updateExpanded] = useState(false);
+  const [navColour, updateNavbar] = useState(false);
 
-  const [language, setLanguage] = useState("Hindi");
-  const [data, setData] = useState("null");
-
-  const [translatedData, setTranslatedData] = useState(null);
-
-  const options = [
-    { value: "Hindi", label: "Hindi" },
-    { value: "Gujarati", label: "Gujarati" },
-    { value: "Tamil", label: "Tamil" },
-    { value: "Telugu", label: "Telugu" },
-    { value: "Bengali", label: "Bengali" },
-    { value: "Marathi", label: "Marathi" },
-    { value: "Punjabi", label: "Punjabi" },
-  ];
-
-  const handleLanguageChange = (selectedOption) => {
-    setLanguage(selectedOption);
-  };
-  console.log(language)
-
-
-  const fetchPdfData = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/getData");
-      setPdfData(response.data);
-    } catch (error) {
-      console.error("Error fetching PDF data:", error);
+  function scrollHandler() {
+    if (window.scrollY >= 20) {
+      updateNavbar(true);
+    } else {
+      updateNavbar(false);
     }
-  };
-
-  const fetchTranlatedData = async () => { 
-    try {
-      const response = await axios.get("http://localhost:5000/api/getTranslatedData");
-      setTranslatedData(response.data);
-    } catch (error) {
-      console.error("Error fetching PDF data:", error);
-    }
-  
   }
-  useEffect(() => {
-    fetchTranlatedData();
-  }, [translatedData]);
 
-  useEffect(() => {
-    fetchPdfData();
-     // Clean up the interval and handle unload
-     window.addEventListener("beforeunload", () => {
-      // Send a request to the server to clear the data
-      axios.get('http://localhost:5000/api/clearData')
-        .then((res) => console.log(res.data))
-        .catch((error) => console.error('Error clearing data:', error));
-
-      axios.get('http://localhost:5000/api/clearTranslatedData')
-        .then((res) => console.log(res.data))
-        .catch((error) => console.error('Error clearing data:', error));
-      
-    });
-  },[isClicked]);
-
-  
-
-  const handleUpload = async (e) => {
-    const formData = new FormData();
-    formData.append("fileName", file);
-    try {
-      axios
-        .post("http://localhost:5000/upload", formData)
-        .then((res) => res.data)
-        .then((data) => {
-          console.log(data);
-        })
-        .then(() => {
-          fetchPdfData();
-        });
-        ;
-    } catch (error) {
-      console.error(error);
-    }finally{
-      setIsClicked(!isClicked);
-    }
-    {console.log(data)}
-  };
-
-  // const handleTranslation = () => {
-  //   console.log("first");
-  //   axios
-  //     .post("http://localhost:5000/api/sendData", {
-  //       text: data,
-  //       language: language,
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     })
-  //     .then(() => {
-  //       fetchTranlatedData();
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error translating text:", error);
-  //     });
-  // };
-
-  const handleTranslation = async () => {
-    try {
-      console.log("first");
-      const translationResponse = await axios.post("http://localhost:5000/api/sendData", {
-        text: data,
-        language: language,
-      });
-  
-      console.log(translationResponse.data);
-  
-      // Update translated data state
-      setTranslatedData(translationResponse.data);
-  
-      // Fetch translated data
-      await fetchTranlatedData();
-    } catch (error) {
-      console.error("Error translating text:", error);
-    }
-  };
+  window.addEventListener("scroll", scrollHandler);
 
   return (
-    <div>
-      <p>Welcome To Langchain</p>
-      {console.log("hello saab")}
+    <Navbar
+      expanded={expand}
+      fixed="top"
+      expand="md"
+      className={navColour ? "sticky" : "navbar"}
+    >
+      <Container>
+        <Navbar.Brand href="/" className="d-flex">
+          <h3>R <span></span>J</h3>
+        </Navbar.Brand>
+        <Navbar.Toggle
+          aria-controls="responsive-navbar-nav"
+          onClick={() => {
+            updateExpanded(expand ? false : "expanded");
+          }}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </Navbar.Toggle>
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ms-auto" defaultActiveKey="#home">
+            <Nav.Item>
+              <Nav.Link 
+              as={Link}
+               to="/" onClick={() => updateExpanded(false)}>
+                <AiOutlineHome style={{ marginBottom: "2px" , marginRight: "5px"  }} /> Home
+              </Nav.Link>
+            </Nav.Item>
 
-      <input
-        type="file"
-        name="fileName"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
-      <button type="button" onClick={handleUpload}>
-        Upload
-      </button>
-      <p>Uploaded file: {file ? file.name : "None"}</p>
+            <Nav.Item>
+              <Nav.Link
+                // as={Link}
+                href="#skills"
+                to="/about"
+                onClick={() => updateExpanded(false)}
+              >
+                <AiOutlineUser style={{ marginBottom: "2px" , marginRight: "5px" }} /> Skills
+              </Nav.Link>
+            </Nav.Item>
 
-      <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange}/>
-      <p>Selected Language :{language}</p>
+            <Nav.Item>  
+              <Nav.Link
+                // as={Link}
+                href="#project"
+                to="/project"
+                onClick={() => updateExpanded(false)}
+              >
+                <AiOutlineFundProjectionScreen
+                  style={{ marginBottom: "2px"  , marginRight: "5px" }}
+                />{" "}
+                Projects
+              </Nav.Link>
+            </Nav.Item>
 
-      {translatedData && <p>{translatedData}</p>}
+            <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to="/resume"
+                onClick={() => updateExpanded(false)}
+              >
+                <CgFileDocument style={{ marginBottom: "2px"  , marginRight: "5px" }} /> Resume
+              </Nav.Link>
+            </Nav.Item>
 
-      {pdfData &&
-        pdfData.map((doc, index) => (
-          <div key={index}>
-            <h1>
-              Current Page Number {doc.metadata.loc.pageNumber} /{" "}
-              {doc.metadata.pdf.totalPages}
-            </h1>{" "}
-            <button
-              onClick={(e) => {
-                handleTranslation(e);
-                setData(doc.pageContent);
-              }}
-            >
-              Translator
-            </button>
-            {console.log(data)}
-            <p>{doc.pageContent}</p>
-          </div>
-        ))}
-    </div>
+            {/* <Nav.Item>
+              <Nav.Link
+                href="https://soumyajitblogs.vercel.app/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <ImBlog style={{ marginBottom: "2px"  , marginRight: "5px" }} /> Blogs
+              </Nav.Link>
+            </Nav.Item> */}
+
+            <Nav.Item className="fork-btn">
+              <Button
+                href="https://github.com/Raj-chhaperwal"
+                target="_blank"
+                className="fork-btn-inner"
+              >
+                <CgGitFork style={{ fontSize: "1.2em", color:"white" }} />{" "}
+                <AiFillStar style={{ fontSize: "1.1em", color:"white" }} />
+              </Button>
+            </Nav.Item>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
-};
+}
 
 export default Home;

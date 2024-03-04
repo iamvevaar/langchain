@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import { FileUploader } from "react-drag-drop-files";
+import { FaArrowUp } from "react-icons/fa";
 import './ask.css'
 
 const fileTypes = ["PDF"];
@@ -45,8 +46,15 @@ const Ask = () => {
     } catch (error) {
       console.error('Error posting question:', error);
     }
-
   }
+
+  useEffect(() => {
+    const originalBackground = document.body.style.background;
+    document.body.style.background = "#D3D3D3";
+    return () => {
+        document.body.style.background = originalBackground;
+    };
+}, []);
 
   return (
     <div className='main'>
@@ -54,10 +62,7 @@ const Ask = () => {
         <FileUploader className="demo" handleChange={handleChange} name="file" types={fileTypes} />
         <p>{file ? `File name: ${file.name}` : "Not A file Selected Yet"}</p>
       </div>
-      <div className='questionBox'>
-        <input type="text" onChange={(e) => setQuestion(e.target.value)} value={question} placeholder='Ask Your Question' disabled={!file} />
-        <button onClick={postQuestionHandler} disabled={!question}>Go</button>
-      </div>
+     
 
       {/* Display all the answers */}
       {answers.length > 0 && (
@@ -67,8 +72,12 @@ const Ask = () => {
           ))}
         </div>
       )}
+       <div className='questionBox'>
+        <input type="text" onChange={(e) => setQuestion(e.target.value)} value={question} placeholder='Ask Your Question' disabled={!file} />
+        <button className="btn" onClick={postQuestionHandler} disabled={!question} ><FaArrowUp /></button>
+      </div>
     </div>
   );
 }
 
-export default Ask
+export default Ask	
