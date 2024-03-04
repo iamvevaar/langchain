@@ -1,0 +1,84 @@
+
+.radioOptionsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust the space between each radio button */
+}
+
+.radioOptionsContainer div {
+  display: flex;
+  align-items: center;
+}
+
+input[type="radio"] {
+  margin-right: 8px; /* Space between radio button and label */
+  cursor: pointer; /* Change cursor to pointer when hovering over the radio button */
+}
+
+input[type="radio"]:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #fff;
+  content: "";
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid #cccccc;
+}
+
+input[type="radio"]:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #004c99; /* Change to your preferred color */
+  content: "";
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid #004c99; /* Change to match the background color */
+}
+
+label {
+  cursor: pointer; /* Change cursor to pointer when hovering over the label */
+}
+  
+.button {
+  background-color: #20df7f;
+  color: white;
+  padding: 4px 10px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0px 15px 10px -15px #111;
+}
+
+.button:hover {
+  background-color: #00763b;
+  color: white;
+}
+
+/* Custom.css */
+
+/* Adjust navbar brand image size on smaller screens */
+@media (max-width: 768px) {
+  .navbar-brand img {
+      width: 28px;
+      height: 28px;
+  }
+}
+
+/* Adjust left margin for the navbar on smaller screens */
+@media (max-width: 992px) {
+  .navbar {
+      margin-left: 0;
+      width: 100%;
+  }
+}

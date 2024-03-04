@@ -5,7 +5,7 @@ import Radios from '../../component/Radios';
 import i18n from '../../configuration/i18n'
 import { useTranslation, initReactI18next } from 'react-i18next'
 import { useNavigate } from 'react-router-dom';
-
+import Header from '../../component/NavBar';
 initReactI18next.init(i18n)
 
 const Dashboard = () => {
@@ -113,6 +113,7 @@ const Dashboard = () => {
 
   return (
     <div>
+      <Header/>
       <p>{t('Welcome To Langchain')}</p>
       {console.log("hello saab")}
 

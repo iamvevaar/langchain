@@ -55,7 +55,7 @@ const Splash = () => {
             <h4 style={{ color: "white" }}>{t('Shabdo ka saar hai vevaar...')}</h4> <br />
             <select value={selectedLanguage} onChange={handleLanguageChange} className="card-deck-dropdown">
                 <option value="lang">{t('selectLanguage')}</option>
-                <option value="en">{t('english')}</option>
+                <option value="en">{t('English')}</option>
                 <option value="es">{t('spanish')}</option>
                 <option value="fr">{t('French')}</option>
                 <option value="hi">{t('Hindi')}</option>

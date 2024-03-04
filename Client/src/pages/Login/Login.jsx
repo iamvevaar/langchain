@@ -56,9 +56,11 @@ function Login() {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       console.log('User signed in with Google successfully', result.user);
+      // Store user information in localStorage
+      localStorage.setItem('user', JSON.stringify(result.user));
       navigate("/Dashboard");
     } catch (error) {
-      showCustomErrorToast(t('Error signing in with Google: ') + error.message);
+      showCustomErrorToast('Error signing in with Google: ' + error.message);
     }
   };
 
