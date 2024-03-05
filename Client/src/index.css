@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+=======
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
+/* body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+} */
+
+
+>>>>>>> d052b76912e4691eb1edea20f5f9023721ae0b19
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -22,13 +35,6 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
 
 
 
@@ -65,7 +71,11 @@ button:focus-visible {
 } */
 h1 {
   font-size: 3.2em;
+<<<<<<< HEAD
   color: white;
+=======
+  color: rgb(0, 0, 0);
+>>>>>>> d052b76912e4691eb1edea20f5f9023721ae0b19
   line-height: 1.1;
 }
 .signup-container {
@@ -115,6 +125,10 @@ h1 {
 .signup-container .error-message {
   color: red;
   margin-bottom: 10px;
+<<<<<<< HEAD
 }
 
 
+=======
+}
+>>>>>>> d052b76912e4691eb1edea20f5f9023721ae0b19

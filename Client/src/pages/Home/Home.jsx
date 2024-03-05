@@ -14,7 +14,7 @@ const Home = () => {
   const [count, setCount] = useState(0);
 
   const [language, setLanguage] = useState("Hindi");
-  const [data, setData] = useState(null);
+  const [data, setData] = useState("null");
 
   const [translatedData, setTranslatedData] = useState(null);
 
@@ -124,22 +124,42 @@ const Home = () => {
     { console.log(data) }
   };
 
-  const handleTranslation = () => {
-    console.log("first");
-    axios
-      .post("http://localhost:5000/api/sendData", {
+  // const handleTranslation = () => {
+  //   console.log("first");
+  //   axios
+  //     .post("http://localhost:5000/api/sendData", {
+  //       text: data,
+  //       language: language,
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .then(() => {
+  //       fetchTranlatedData();
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error translating text:", error);
+  //     });
+  // };
+
+  const handleTranslation = async () => {
+    try {
+      console.log("first");
+      const translationResponse = await axios.post("http://localhost:5000/api/sendData", {
         text: data,
         language: language,
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .then(() => {
-        fetchTranlatedData();
-      })
-      .catch((error) => {
-        console.error("Error translating text:", error);
       });
+  
+      console.log(translationResponse.data);
+  
+      // Update translated data state
+      setTranslatedData(translationResponse.data);
+  
+      // Fetch translated data
+      await fetchTranlatedData();
+    } catch (error) {
+      console.error("Error translating text:", error);
+    }
   };
 
   return (
