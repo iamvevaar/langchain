@@ -213,7 +213,7 @@ const Dashboard = () => {
                 </Col>
                 <Col lg={3}><p>{t('Current Page Number')} {count} / {t('Total Pages')} {totalPages}</p></Col>
                 <Col lg={2}> <button className='button' onClick={increment} disabled={count >= totalPages}><GoTriangleRight style={{ fontSize: "2rem" }} /></button></Col>
-                <Col lg={2}> <button className='button' >{t('Translate')}</button></Col>
+                <Col lg={2}> <button className='button'onClick={()=>{handleTranslation(pdfData[count].pageContent)}} >{t('Translate')}</button></Col>
                 {/* <Col lg={2}> <button className='button'>{t('jump')}</button></Col> */}
                 <Col lg={3}>
                   <button className='button' onClick={() => handleJump()}>{t('Jump')}</button>
