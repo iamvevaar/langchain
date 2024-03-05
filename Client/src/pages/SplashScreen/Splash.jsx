@@ -10,7 +10,9 @@ initReactI18next.init(i18n)
 const Splash = () => {
     const {t} = useTranslation();
     const navigate = useNavigate();
-    const [selectedLanguage, setSelectedLanguage] = useState('lang');
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'lang';
+    const [selectedLanguage, setSelectedLanguage] = useState(savedLanguage);
+    // const [selectedLanguage, setSelectedLanguage] = useState('lang');
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
@@ -26,7 +28,8 @@ const Splash = () => {
     const handleLanguageChange = (e) => {
         const lang = e.target.value
         setSelectedLanguage(lang);
-        i18n.changeLanguage(lang)
+        localStorage.setItem('selectedLanguage', lang);
+        i18n.changeLanguage(lang);
     };
 
     const handleNavigate = () => {
@@ -39,6 +42,11 @@ const Splash = () => {
             document.body.style.background = originalBackground;
         };
     }, []);
+
+    useEffect(() => {
+        // When component mounts, change the language to the previously selected one
+        i18n.changeLanguage(savedLanguage);
+    }, [savedLanguage]);
 
     return (
         <div style={{ height: "41.9rem", width: "100%", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

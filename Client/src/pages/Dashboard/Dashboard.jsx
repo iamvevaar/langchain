@@ -147,6 +147,13 @@ const Dashboard = () => {
     fileInputRef.current.click();
   };
 
+  useEffect(() => {
+    const selectedLanguage = localStorage.getItem('selectedLanguage');
+    if (selectedLanguage) {
+      i18n.changeLanguage(selectedLanguage);
+    }
+  }, []);
+
 
   return (
     <div>
