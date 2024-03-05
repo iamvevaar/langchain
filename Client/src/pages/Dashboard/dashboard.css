@@ -101,7 +101,9 @@
   height: 100vh;
   width: 100%;
   background-color: #ffffff;
-  border: 1px solid #c50000;
+  border-radius: 10px;
+  border: 2px solid #5be70a;
+  overflow: hidden;
 }
 .pager {
   display: flex;
@@ -109,8 +111,8 @@
   align-items: center;
   height: 10%;
   width: 100%;
-  background-color: #9e9e9e;
-  border-bottom: 1px solid #c50000;
+  background-color: #6ef5bd;
+  border-bottom: 2px solid #5be70a;
 }
 
 .pdfcontent {
@@ -120,8 +122,8 @@
   height: 4rem;
   gap: 2rem;
   width: 100%;
-  background-color: #9e9e9e;
-  border: 1px solid #c50000;
+  background-color: #6ef5bd;
+  border: 2px solid #5be70a;
 }
 
 .content {
