@@ -8,13 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../component/NavBar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-initReactI18next.init(i18n)
 import './dashboard.css'
 import { GoTriangleRight, GoTriangleLeft, GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { showCustomErrorToast } from '../../component/CustomToast';
 import { ToastContainer } from 'react-toastify';
 import { MdFileUpload } from "react-icons/md";
 
+initReactI18next.init(i18n)
 
 const Dashboard = () => {
 
@@ -43,6 +43,14 @@ const Dashboard = () => {
     { value: "mr", label: "Marathi" },
     { value: "pa", label: "Punjabi" },
   ];
+
+
+  useEffect(() => {
+    const selectedLanguage = localStorage.getItem('selectedLanguage');
+    if (selectedLanguage) {
+      i18n.changeLanguage(selectedLanguage);
+    }
+  }, []);
 
   const handleUpload = async (e) => {
     const formData = new FormData();
