@@ -253,6 +253,9 @@ const Dashboard = () => {
                 {isPdfVisible && pdfData &&
                   pdfData.map((doc, index) => (
                     <Row key={index} >
+                      <h1>
+                      {doc?.metadata?.loc?.pageNumber}
+                      </h1>
                       <Col>
                         <div className="pdf-page-content" dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '') }} />
                       </Col>
