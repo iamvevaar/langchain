@@ -74,8 +74,8 @@ const Dashboard = () => {
     setLanguage(selectedOption);
   };
 
-
-  // console.log(pdfData[0]?.metadata?.pdf?.totalPages)
+  
+    // console.log(pdfData[0]?.metadata?.pdf?.totalPages)
 
   const handleTranslation = async (content) => {
     console.log("am i clicked")
@@ -105,8 +105,20 @@ const Dashboard = () => {
     jspdf.html(value, main);
   }
 
+  // function convertToSingleLineString(multiLineString) {
+  //   return multiLineString.replace(/\n/g, ' ').trim();
+  // }
+
+  // const singleLineContent = convertToSingleLineString(data);
+
+  // console.log("this is single line content" + singleLineContent);
+
+  // useEffect(() => {
+  //   handleTranslation();
+  // }, []);
+
   const [count, setCount] = useState(0);
-  const totalPages = pdfData?.[0]?.metadata?.pdf?.totalPages;
+  const totalPages = pdfData?.[0]?.metadata?.pdf?.totalPages - 1 ;
   console.log(totalPages)
 
   const increment = () => {
@@ -116,11 +128,11 @@ const Dashboard = () => {
     setCount(count + 1);
   }
   const decrement = () => {
-    if (count <= 1) {
+    if (count < 1) {
       return;
     }
     setCount(count - 1);
-
+  
   }
 
 
@@ -147,50 +159,51 @@ const Dashboard = () => {
         <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
       </div>
       }
-        <div className='singleContainer' >
-          <div className='pager'>
-            <button onClick={decrement}>{t('Previous')}</button>
-            <p>{t('Current Page Number')} {count} / {t('Total Pages')}</p>
-            <button onClick={increment} disabled={count > totalPages} >{t('Next')}</button>
-          </div>
-          <div className='content'>
-            {pdfData && pdfData[count].pageContent}
-          </div>
+
+
+      <div className='singleContainer' >
+        <div className='pager'>
+          <button onClick={decrement}>{t('Previous')}</button>
+          <p>{t('Current Page Number')} {count+1} / {t('Total Pages')}</p>
+          <button onClick={increment} disabled={count > totalPages} >{t('Next')}</button>
         </div>
-        {/* {
+        <div className='content'>
+          {pdfData && pdfData[count].pageContent}
+        </div>
+      </div>
+      {/* {
           console.log(pdfData[0]?.metadata?.pdf?.totalPages)
         } */}
 
-        {pdfData &&
-          pdfData.map((doc, index) => (
-            <div key={index}>
-              <h1>
-                {t('Current Page Number')} {doc.metadata.loc.pageNumber} /{" "}
-                {doc.metadata.pdf.totalPages}
-              </h1>{" "}
-              <button ref={btnTransRef}
-                onClick={() => {
-                  handleTranslation(doc.pageContent);
-                  setData(doc.pageContent)
-                  { data }
-                  console.log("btnTanshoo mein")
-                }}
-              >
-                {t('Translator')}
-              </button>
-              <button onClick={() => { donwnloadHandler(doc.pageContent) }}>{t('Download')}</button>
-              {/* <p>{doc.pageContent}</p> */}
-              <div dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '<br/>') }} />
-            </div>
-          ))}
+      {pdfData &&
+        pdfData.map((doc, index) => (
+          <div key={index}>
+            <h1>
+              {t('Current Page Number')} {doc.metadata.loc.pageNumber} /{" "}
+              {doc.metadata.pdf.totalPages}
+            </h1>{" "}
+            <button ref={btnTransRef}
+              onClick={() => {
+                handleTranslation(doc.pageContent);
+                setData(doc.pageContent)
+                { data }
+                console.log("btnTanshoo mein")
+              }}
+            >
+              {t('Translator')}
+            </button>
+            <button onClick={() => { donwnloadHandler(doc.pageContent) }}>{t('Download')}</button>
+            {/* <p>{doc.pageContent}</p> */}
+            <div dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '<br/>') }} />
+          </div>
+        ))}
 
 
-        <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Ask')}>Submit</button>
-        <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Login')}>Submit</button>
-        <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate("/Register")}>Submit</button>
+      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Ask')}>Submit</button>
+      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Login')}>Submit</button>
+      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate("/Register")}>Submit</button>
 
-      </div>
-  )
+    </div>)
 }
 
 
