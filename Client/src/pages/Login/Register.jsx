@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { getAuth,createUserWithEmailAndPassword,signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { showCustomErrorToast } from '../../component/CustomToast';
-import {useTranslation,initReactI18next} from 'react-i18next'
+import { useTranslation, initReactI18next } from 'react-i18next'
 import i18n from '../../configuration/i18n';
 //core components
 import { app } from '../../authentication/Firebase';
 import './login.css';
 const auth = getAuth(app);
 import CustomWave from '../../component/CustomWave';
-import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 initReactI18next.init(i18n)
 
@@ -22,7 +23,7 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const signUp = async (e) => {
     e.preventDefault();
@@ -47,27 +48,23 @@ function Register() {
   };
 
 
-  const signUpWithGoogle = async () => {
+  const signInWithGoogle = async () => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       console.log('User signed in with Google successfully', result.user);
+      localStorage.setItem('user', JSON.stringify(result.user));
       navigate("/Dashboard");
     } catch (error) {
-      showCustomErrorToast(t('Error signing in with Google: ' + error.message));
+      showCustomErrorToast('Error signing in with Google: ' + error.message);
     }
   };
-
-
-  // const togglePasswordVisibility = () => {
-  //   setShowPassword(!showPassword);
-  // };
 
   return (
     <div className="container-fluid h-100 d-flex justify-content-center align-items-center">
       <ToastContainer />
       <div className="row">
-        <div className="col-12 col-md-8 mx-auto">
+        <div className="col-12 col-md-11 mx-auto mt-5">
           <div className="mt-5 px-3">
             <div className="mb-4 text-center">
               <h1 style={{ fontFamily: "times", fontSize: "3rem", fontWeight: "500", color: "black" }}>{t('Vevaar')}</h1>
@@ -80,11 +77,11 @@ function Register() {
                   <input placeholder={t('Email')} className="form-control" type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
 
-                <div className="col-12 mb-2 password-wrapper">
+                <div className="col-12 mb-2 position-relative">
                   <input type={showPassword ? "text" : "password"} className="form-control" placeholder={t('Password')} value={password} onChange={(e) => setPassword(e.target.value)} />
-                  {/* <button type="button" className="password-toggle-btn" onClick={togglePasswordVisibility}>
+                  <span className="position-absolute top-50 end-0 translate-middle-y me-4" style={{ cursor: 'pointer', fontSize: "1.5rem", color: "white" }} onClick={() => setShowPassword(!showPassword)}>
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </button> */}
+                  </span>
                 </div>
 
 
@@ -96,8 +93,8 @@ function Register() {
               </div>
               <div className="col-12 d-flex gap-2 flex-column justify-content-center mt-3 mt-md-5 text-center">
                 <a href='/Login' className="link-secondary text-decoration-none">{t('Already have an account ! Register')}</a>
-                <label style={{ marginTop: 10, backgroundColor: 'white', color: 'black' }} type="button" onClick={signUpWithGoogle}>
-                  <FaGoogle />
+                <label style={{ marginTop: 10, backgroundColor: 'white', color: 'black' }} type="button" onClick={signInWithGoogle}>
+                  <FcGoogle style={{ fontSize: "2.5rem" }} />
                 </label>
               </div>
 

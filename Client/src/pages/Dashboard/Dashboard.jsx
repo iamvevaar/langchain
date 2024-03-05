@@ -6,6 +6,8 @@ import i18n from '../../configuration/i18n'
 import { useTranslation, initReactI18next } from 'react-i18next'
 import { useNavigate } from 'react-router-dom';
 import Header from '../../component/NavBar';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 initReactI18next.init(i18n)
 
 const Dashboard = () => {
@@ -99,72 +101,84 @@ const Dashboard = () => {
     jspdf.html(value, main);
   }
 
-  // function convertToSingleLineString(multiLineString) {
-  //   return multiLineString.replace(/\n/g, ' ').trim();
-  // }
-
-  // const singleLineContent = convertToSingleLineString(data);
-
-  // console.log("this is single line content" + singleLineContent);
-
-  // useEffect(() => {
-  //   handleTranslation();
-  // }, []);
-
   return (
     <div>
-      <Header/>
-      <p>{t('Welcome To Langchain')}</p>
-      {console.log("hello saab")}
-
-      <input
-        type="file"
-        name="fileName"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
-      <button type="button" onClick={handleUpload}>
-        {t('Upload')}
-      </button>
-      <p>{t('Uploaded file:')} {file ? file.name : "None"}</p>
-
-      <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange} />
-      <p>{t('Selected Language :')}{language}</p>
-
-      {translatedData && <div>
-        <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
+      <div>
+        <Header />
       </div>
-      }
-
-      {pdfData &&
-        pdfData.map((doc, index) => (
-          <div key={index}>
-            <h1>
-              {t('Current Page Number')} {doc.metadata.loc.pageNumber} /{" "}
-              {doc.metadata.pdf.totalPages}
-            </h1>{" "}
-            <button ref={btnTransRef}
-              onClick={() => {
-                handleTranslation(doc.pageContent);
-                setData(doc.pageContent)
-                { data }
-                console.log("btnTanshoo mein")
-              }}
-            >
-              {t('Translator')}
+      <div>
+        <Row className='mt-4'>
+          <Col>
+            <p>{t('Welcome To Langchain')}</p>
+            {console.log("hello saab")}
+          </Col>
+        </Row>
+        <Row className='mt-3 mb-4'>
+          <Col lg={4}>
+            <input
+              type="file"
+              name="fileName"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </Col>
+          <Col lg={4}>
+            <p>{t('Uploaded file:')} {file ? file.name : "None"}</p>
+          </Col>
+          <Col lg={4}>
+            <button type="button" onClick={handleUpload}>
+              {t('Upload')}
             </button>
-            <button onClick={() => { donwnloadHandler(doc.pageContent) }}>{t('Download')}</button>
-            {/* <p>{doc.pageContent}</p> */}
-            <div dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '<br/>') }} />
-          </div>
-        ))}
+          </Col>
+        </Row>
+        <Row >
+          <Col xs={12} className='mb-4'>
+            <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange} />
+          </Col>
+          <Col xs={12} >
+            <p>{t('Selected Language :')}{language}</p>
+          </Col>
+        </Row>
+        {translatedData && <div>
+          <Row>
+            <Col>
+              <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
+            </Col>
+          </Row>
+        </div>
+        }
 
-     
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Ask')}>Submit</button>
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Login')}>Submit</button>
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate("/Register")}>Submit</button>
+        {pdfData &&
+          pdfData.map((doc, index) => (
+            <Row key={index}>
+              <Col>
+                <h1>
+                  {t('Current Page Number')} {doc.metadata.loc.pageNumber} /{" "}
+                  {doc.metadata.pdf.totalPages}
+                </h1>{" "}
+                <button ref={btnTransRef}
+                  onClick={() => {
+                    handleTranslation(doc.pageContent);
+                    setData(doc.pageContent)
+                    { data }
+                    console.log("btnTanshoo mein")
+                  }}
+                >
+                  {t('Translator')}
+                </button>
+                <button onClick={() => { donwnloadHandler(doc.pageContent) }}>{t('Download')}</button>
+                {/* <p>{doc.pageContent}</p> */}
+                <div dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '<br/>') }} />
+              </Col>
+            </Row>
+          ))}
 
+      </div>
     </div>
   )
 }
 
 export default Dashboard
+
+{/* <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Ask')}>Submit</button>
+ <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Login')}>Submit</button>
+ <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate("/Register")}>Submit</button> */}

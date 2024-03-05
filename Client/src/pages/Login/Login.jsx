@@ -6,12 +6,14 @@ import { showCustomErrorToast } from '../../component/CustomToast';
 import sideimage from '../../assets/121Bg.png'
 import { app } from '../../authentication/Firebase';
 import './login.css';
-import { useTranslation,initReactI18next } from 'react-i18next'; 
+import { useTranslation, initReactI18next } from 'react-i18next';
 import i18n from '../../configuration/i18n'
-const auth = getAuth(app);
 import CustomWave from '../../component/CustomWave';
-import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
+
+const auth = getAuth(app);
 initReactI18next.init(i18n);
 
 function Login() {
@@ -23,7 +25,6 @@ function Login() {
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
-    // Regular expression for basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
@@ -33,6 +34,7 @@ function Login() {
     try {
       if (validateEmail(email) && password.length > 0) {
         await signInWithEmailAndPassword(auth, email, password);
+        localStorage.setItem('user', JSON.stringify({ email })); 
         console.log('User signed in successfully');
         navigate("/Dashboard");
       } else {
@@ -65,9 +67,6 @@ function Login() {
   };
 
 
-  // const togglePasswordVisibility = () => {
-  //   setShowPassword(!showPassword);
-  // };
 
   return (
     <div className="container-fluid h-90">
@@ -93,13 +92,12 @@ function Login() {
                       <input placeholder={t('Email')} className="form-control" type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
 
-                    <div className="col-12 mb-2 position-relative ">
+                    <div className="col-12 mb-2 position-relative">
                       <input type={showPassword ? "text" : "password"} className="form-control" placeholder={t('Password')} value={password} onChange={(e) => setPassword(e.target.value)} />
-                      {/* <button type="button" className="btn position-absolute end-0" onClick={togglePasswordVisibility} style={{ marginTop: "12px", marginRight: "10px", background: "none" }}>
-                        {showPassword ? <FaEyeSlash style={{ color: 'white' }} /> : <FaEye style={{ color: 'white' }} />}
-                      </button> */}
+                      <span className="position-absolute top-50 end-0 translate-middle-y me-4" style={{ cursor: 'pointer', fontSize: "1.5rem", color: "white" }} onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                      </span>
                     </div>
-
                     <div className="col-12">
                       <div className="d-grid">
                         <button className="btn btn-lg " type={t("submit")} style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }}>{t('Login')}</button>
@@ -108,8 +106,8 @@ function Login() {
                   </div>
                   <div className="col-12 d-flex gap-2 flex-column justify-content-center mt-3 mt-md-5 text-center">
                     <a href='/Register' className="link-secondary text-decoration-none">{t('Does Not Have an Account Yet? Register')}</a>
-                    <label style={{ marginTop: 10, backgroundColor: 'white', color: 'black' }} type="button" onClick={signInWithGoogle}>
-                      <FaGoogle />
+                    <label style={{ marginTop: 20, backgroundColor: 'white', color: 'black' }} type="button" onClick={signInWithGoogle}>
+                      <FcGoogle style={{ fontSize: "2.5rem" }} />
                     </label>
                   </div>
 
