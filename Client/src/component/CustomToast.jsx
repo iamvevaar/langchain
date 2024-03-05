@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,7 +14,7 @@ export const CustomToastContent = ({ message }) => (
 // Function to show custom error toast
 export const showCustomErrorToast = (message) => {
     toast(<CustomToastContent message={message} />, {
-        style: { backgroundColor: 'rgba(255, 255, 255, 0.5)' }, // Adjusted for semi-transparent background
+        style: { backgroundColor: 'rgb(217,217,217)' }, // Adjusted for semi-transparent background
         position: "top-left",
         autoClose: 5000,
         hideProgressBar: false,
@@ -24,5 +23,5 @@ export const showCustomErrorToast = (message) => {
         draggable: true,
         progress: false,
         closeButton: true,
-    });
+    });
 };
