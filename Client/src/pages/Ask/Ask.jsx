@@ -81,7 +81,7 @@ const Ask = () => {
       )}
       <div className='questionBox'>
         <input type="text" onChange={(e) => setQuestion(e.target.value)} value={question} placeholder='Ask Your Question' disabled={!file} />
-        <button className="btn" onClick={postQuestionHandler} disabled={!question} ><FaArrowUp /></button>
+        <button className="button" onClick={postQuestionHandler} disabled={!question} ><FaArrowUp /></button>
       </div>
     </div>
   );

@@ -6,6 +6,8 @@ import i18n from '../../configuration/i18n'
 import { useTranslation, initReactI18next } from 'react-i18next'
 import { useNavigate } from 'react-router-dom';
 import Header from '../../component/NavBar';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 initReactI18next.init(i18n)
 import './dashboard.css'
 
@@ -72,8 +74,8 @@ const Dashboard = () => {
     setLanguage(selectedOption);
   };
 
-  
-    // console.log(pdfData[0]?.metadata?.pdf?.totalPages)
+
+  // console.log(pdfData[0]?.metadata?.pdf?.totalPages)
 
   const handleTranslation = async (content) => {
     console.log("am i clicked")
@@ -116,7 +118,7 @@ const Dashboard = () => {
   // }, []);
 
   const [count, setCount] = useState(1);
-  const totalPages = pdfData?.[0]?.metadata?.pdf?.totalPages ;
+  const totalPages = pdfData?.[0]?.metadata?.pdf?.totalPages;
   console.log(totalPages)
 
   const increment = () => {
@@ -130,13 +132,13 @@ const Dashboard = () => {
       return;
     }
     setCount(count - 1);
-  
+
   }
 
 
   return (
     <div>
-      <Header />
+      {/* <Header />
       <p>{t('Welcome To Langchain')}</p>
       {console.log("hello saab")}
 
@@ -156,53 +158,127 @@ const Dashboard = () => {
       {translatedData && <div>
         <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
       </div>
-      }
-
-
-      <div className='singleContainer' >
-        <div className='pager'>
-          <button onClick={decrement}>{t('Previous')}</button>
-          <p>{t('Current Page Number')} {count} / {t('Total Pages')}</p>
-          <button onClick={increment} disabled={count > totalPages} >{t('Next')}</button>
-        </div>
-        <div className='content'>
-          {pdfData && pdfData[count].pageContent}
-        </div>
+      } */}
+      <div>
+        <Header />
       </div>
-      {/* {
+      <div>
+        <Row className='mt-4'>
+          <Col>
+            <p>{t('Welcome To Langchain')}</p>
+            {console.log("hello saab")}
+          </Col>
+        </Row>
+        <Row className='mt-3 mb-4'>
+          <Col lg={4}>
+            <input
+              type="file"
+              name="fileName"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </Col>
+          <Col lg={4}>
+            <p>{t('Uploaded file:')} {file ? file.name : "None"}</p>
+          </Col>
+          <Col lg={4}>
+            <button type="button" onClick={handleUpload}>
+              {t('Upload')}
+            </button>
+          </Col>
+        </Row>
+        <Row >
+          <Col xs={12} className='mb-4'>
+            <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange} />
+          </Col>
+          <Col xs={12} >
+            <p>{t('Selected Language :')}{language}</p>
+          </Col>
+        </Row>
+        {translatedData && <div>
+          <Row>
+            <Col>
+              <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
+            </Col>
+          </Row>
+        </div>
+        }
+
+
+        {/* <div className='singleContainer' >
+          <div className='pager'>
+            <button onClick={decrement}>{t('Previous')}</button>
+            <p>{t('Current Page Number')} {count} / {t('Total Pages')}</p>
+            <button onClick={increment} disabled={count > totalPages} >{t('Next')}</button>
+          </div>
+          <div className='content'>
+            {pdfData && pdfData[count].pageContent}
+          </div>
+        </div> */}
+        {/* {
           console.log(pdfData[0]?.metadata?.pdf?.totalPages)
         } */}
 
+        {pdfData &&
+          pdfData.map((doc, index) => (
+            <div key={index}>
+              <h1>
+                {t('Current Page Number')} {doc.metadata.loc.pageNumber} /{" "}
+                {doc.metadata.pdf.totalPages}
+              </h1>{" "}
+              <button ref={btnTransRef}
+                onClick={() => {
+                  handleTranslation(doc.pageContent);
+                  setData(doc.pageContent)
+                  { data }
+                  console.log("btnTanshoo mein")
+                }}
+              >
+                {t('Translator')}
+              </button>
+              <button onClick={() => { donwnloadHandler(doc.pageContent) }}>{t('Download')}</button>
+              {/* <p>{doc.pageContent}</p> */}
+              <div dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '<br/>') }} />
+            </div>
+          ))}
+
+
+        <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Ask')}>Submit</button>
+        <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Login')}>Submit</button>
+        <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate("/Register")}>Submit</button>
+
+      </div>
       {pdfData &&
         pdfData.map((doc, index) => (
-          <div key={index}>
-            <h1>
-              {t('Current Page Number')} {doc.metadata.loc.pageNumber} /{" "}
-              {doc.metadata.pdf.totalPages}
-            </h1>{" "}
-            <button ref={btnTransRef}
-              onClick={() => {
-                handleTranslation(doc.pageContent);
-                setData(doc.pageContent)
-                { data }
-                console.log("btnTanshoo mein")
-              }}
-            >
-              {t('Translator')}
-            </button>
-            <button onClick={() => { donwnloadHandler(doc.pageContent) }}>{t('Download')}</button>
-            {/* <p>{doc.pageContent}</p> */}
-            <div dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '<br/>') }} />
-          </div>
+          <Row key={index}>
+            <Col>
+              <h1>
+                {t('Current Page Number')} {doc.metadata.loc.pageNumber} /{" "}
+                {doc.metadata.pdf.totalPages}
+              </h1>{" "}
+              <button ref={btnTransRef}
+                onClick={() => {
+                  handleTranslation(doc.pageContent);
+                  setData(doc.pageContent)
+                  { data }
+                  console.log("btnTanshoo mein")
+                }}
+              >
+                {t('Translator')}
+              </button>
+              <button onClick={() => { donwnloadHandler(doc.pageContent) }}>{t('Download')}</button>
+              {/* <p>{doc.pageContent}</p> */}
+              <div dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '<br/>') }} />
+            </Col>
+          </Row>
         ))}
 
-
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Ask')}>Submit</button>
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Login')}>Submit</button>
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate("/Register")}>Submit</button>
-
-    </div>)
+    </div>
+  )
 }
 
 
 export default Dashboard;
+
+{/* <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Ask')}>Submit</button>
+ <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Login')}>Submit</button>
+ <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate("/Register")}>Submit</button> */}

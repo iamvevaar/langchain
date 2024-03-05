@@ -53,3 +53,20 @@
 
 
 }
+
+
+.button {
+    background-color: #20df7f;
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    padding: 4px 14px;
+    border-radius: 9px;
+    border: none;
+    box-shadow: 0px 15px 10px -15px #111;
+  }
+  
+  .button:hover {
+    background-color: #00763b;
+    color: white;
+  } 
