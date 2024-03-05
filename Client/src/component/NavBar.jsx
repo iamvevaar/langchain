@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Custom.css';
 import image1 from "../assets/Frame.png";
 import { useNavigate } from 'react-router-dom';
+import Shimmer from './Shimmer/Shimmer';
 
 const Header = () => {
 
@@ -43,6 +44,11 @@ const Header = () => {
         navigate("/Login");
     };
 
+    const handleShimmerClick = () => {
+        console.log("i amshimmer");
+        navigate("/Ask");
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{ width: "95.49rem", marginLeft: "-8rem" }}>
             <div className="container-fluid">
@@ -55,7 +61,8 @@ const Header = () => {
                 <div className={`${isNavExpanded ? 'show' : ''} collapse navbar-collapse`} id="navbarNav">
                     <ul className="navbar-nav ms-auto me-4">
                         <li className="nav-item ">
-                            <a className="nav-link" href="/Ask">Ask</a>
+                            {/* <a className="nav-link" href="/Ask">Ask</a> */}
+                            <Shimmer onClick={handleShimmerClick} />
                         </li>
                     </ul>
                     {user ? (
