@@ -7,6 +7,7 @@ import { useTranslation, initReactI18next } from 'react-i18next'
 import { useNavigate } from 'react-router-dom';
 import Header from '../../component/NavBar';
 initReactI18next.init(i18n)
+import './dashboard.css'
 
 const Dashboard = () => {
 
@@ -71,6 +72,9 @@ const Dashboard = () => {
     setLanguage(selectedOption);
   };
 
+  
+    // console.log(pdfData[0]?.metadata?.pdf?.totalPages)
+
   const handleTranslation = async (content) => {
     console.log("am i clicked")
     try {
@@ -111,9 +115,28 @@ const Dashboard = () => {
   //   handleTranslation();
   // }, []);
 
+  const [count, setCount] = useState(1);
+  const totalPages = pdfData?.[0]?.metadata?.pdf?.totalPages ;
+  console.log(totalPages)
+
+  const increment = () => {
+    if (count >= totalPages) {
+      return;
+    }
+    setCount(count + 1);
+  }
+  const decrement = () => {
+    if (count <= 1) {
+      return;
+    }
+    setCount(count - 1);
+  
+  }
+
+
   return (
     <div>
-      <Header/>
+      <Header />
       <p>{t('Welcome To Langchain')}</p>
       {console.log("hello saab")}
 
@@ -134,6 +157,21 @@ const Dashboard = () => {
         <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
       </div>
       }
+
+
+      <div className='singleContainer' >
+        <div className='pager'>
+          <button onClick={decrement}>{t('Previous')}</button>
+          <p>{t('Current Page Number')} {count} / {t('Total Pages')}</p>
+          <button onClick={increment} disabled={count > totalPages} >{t('Next')}</button>
+        </div>
+        <div className='content'>
+          {pdfData && pdfData[count].pageContent}
+        </div>
+      </div>
+      {/* {
+          console.log(pdfData[0]?.metadata?.pdf?.totalPages)
+        } */}
 
       {pdfData &&
         pdfData.map((doc, index) => (
@@ -158,13 +196,13 @@ const Dashboard = () => {
           </div>
         ))}
 
-     
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Ask')}>Submit</button>
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate('/Login')}>Submit</button>
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={()=>navigate("/Register")}>Submit</button>
 
-    </div>
-  )
+      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Ask')}>Submit</button>
+      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Login')}>Submit</button>
+      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate("/Register")}>Submit</button>
+
+    </div>)
 }
 
-export default Dashboard
+
+export default Dashboard;

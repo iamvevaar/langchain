@@ -68,6 +68,23 @@
     width: 0;
   }
 }
+.singleContainer{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: #f8f8f8;
+  border: 1px solid #c50000;
+}
+.pager{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+  width: 100%;
+  background-color: #f8f8f8;
+  border: 1px solid #c50000;
+}
 
 /* Retaining your existing styles for the decorative lines */
 .custom-heading-p:before {
