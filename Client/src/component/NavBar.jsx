@@ -44,7 +44,7 @@ const Header = () => {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{ width: "96rem", marginLeft: "-8rem" }}>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{ width: "95.49rem", marginLeft: "-8rem" }}>
             <div className="container-fluid">
                 <a className="navbar-brand ms-5" href="#home">
                     <img src={image1} alt="" style={{ width: "36px", height: "36px" }} />

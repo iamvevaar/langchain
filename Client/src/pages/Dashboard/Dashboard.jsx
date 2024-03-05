@@ -10,6 +10,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 initReactI18next.init(i18n)
 import './dashboard.css'
+import { GoTriangleRight, GoTriangleLeft, GoTriangleDown, GoTriangleUp } from "react-icons/go";
+import { showCustomErrorToast } from '../../component/CustomToast';
+import { ToastContainer } from 'react-toastify';
+import { MdFileUpload } from "react-icons/md";
+
 
 const Dashboard = () => {
 
@@ -19,11 +24,11 @@ const Dashboard = () => {
   const [file, setFile] = useState(null);
   const [pdfData, setPdfData] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
-
-  const [language, setLanguage] = useState("Hindi");
-
+  const [isPdfVisible, setIsPdfVisible] = useState(false);
+  const [language, setLanguage] = useState(null);
+  const [jumpToPage, setJumpToPage] = useState("");
   const [data, setData] = useState(" ");
-
+  const fileInputRef = useRef(null);
   const [translatedData, setTranslatedData] = useState(" ");
 
   const btnTransRef = useRef(null);
@@ -74,8 +79,8 @@ const Dashboard = () => {
     setLanguage(selectedOption);
   };
 
-  
-    // console.log(pdfData[0]?.metadata?.pdf?.totalPages)
+
+  // console.log(pdfData[0]?.metadata?.pdf?.totalPages)
 
   const handleTranslation = async (content) => {
     console.log("am i clicked")
@@ -105,106 +110,156 @@ const Dashboard = () => {
     jspdf.html(value, main);
   }
 
-  // function convertToSingleLineString(multiLineString) {
-  //   return multiLineString.replace(/\n/g, ' ').trim();
-  // }
-
-  // const singleLineContent = convertToSingleLineString(data);
-
-  // console.log("this is single line content" + singleLineContent);
-
-  // useEffect(() => {
-  //   handleTranslation();
-  // }, []);
-
-  const [count, setCount] = useState(0);
-  const totalPages = pdfData?.[0]?.metadata?.pdf?.totalPages - 1 || 0;
+  const [count, setCount] = useState(1);
+  const totalPages = pdfData?.[0]?.metadata?.pdf?.totalPages;
   console.log(totalPages)
 
   const increment = () => {
     if (count >= totalPages) {
-      return;
+      setCount(1);
+    } else {
+      setCount(count + 1);
     }
-    setCount(count + 1);
   }
+
   const decrement = () => {
-    if (count < 1) {
-      return;
+    if (count <= 1) {
+      setCount(totalPages);
+    } else {
+      setCount(count - 1);
     }
-    setCount(count - 1);
-  
   }
+
+  const togglePdfVisibility = () => {
+    setIsPdfVisible(!isPdfVisible); // Toggle visibility
+  };
+  const handleJump = () => {
+    const pageNumber = parseInt(jumpToPage);
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCount(pageNumber);
+    } else {
+      showCustomErrorToast(t('Page Out of Range'));
+    }
+    setJumpToPage(""); // Reset the input field after jumping.
+  };
+
+  const handleFileInputClick = () => {
+    fileInputRef.current.click();
+  };
 
 
   return (
     <div>
-      <Header />
-      <p>{t('Welcome To Langchain')}</p>
-      {console.log("hello saab")}
-
-      <input
-        type="file"
-        name="fileName"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
-      <button type="button" onClick={handleUpload}>
-        {t('Upload')}
-      </button>
-      <p>{t('Uploaded file:')} {file ? file.name : "None"}</p>
-
-      <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange} />
-      <p>{t('Selected Language :')}{language}</p>
-
-      {translatedData && <div>
-        <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
+      <ToastContainer />
+      <div>
+        <Header />
       </div>
-      }
 
+      <div>
+        <Row className='mt-5 mb-4'>
+          <Col lg={4}>
 
-      <div className='singleContainer' >
-        <div className='pager'>
-          <button onClick={decrement}>{t('Previous')}</button>
-          <p>{t('Current Page Number')} {count+1} / {t('Total Pages')}</p>
-          <button onClick={increment} disabled={count > totalPages} >{t('Next')}</button>
-          <button onClick={()=>{handleTranslation(pdfData[count]?.pageContent)}}>Translate</button>
-        </div>
-        <div className='content'>
-          {pdfData && pdfData[count].pageContent}
-        </div>
-      </div>
-      {/* {
-          console.log(pdfData[0]?.metadata?.pdf?.totalPages)
-        } */}
-
-      {pdfData &&
-        pdfData.map((doc, index) => (
-          <div key={index}>
-            <h1 style={{color:"black"}}>
-              {t('Current Page Number')} {doc.metadata.loc.pageNumber} /{" "}
-              {doc.metadata.pdf.totalPages}
-            </h1>{" "}
-            <button ref={btnTransRef}
-              onClick={() => {
-                handleTranslation(doc.pageContent);
-                setData(doc.pageContent)
-                { data }
-                console.log("btnTanshoo mein")
-              }}
-            >
-              {t('Translator')}
+            <input
+              type="file"
+              name="fileName"
+              ref={fileInputRef}
+              onChange={(e) => setFile(e.target.files[0])}
+              style={{ display: 'none' }}
+            />
+            <button className='button' type="button" onClick={handleFileInputClick}>
+            <MdFileUpload /> {" "} {t('Choose File')} 
             </button>
-            <button onClick={() => { donwnloadHandler(doc.pageContent) }}>{t('Download')}</button>
-            {/* <p>{doc.pageContent}</p> */}
-            <div dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '<br/>') }} />
-          </div>
-        ))}
+          </Col>
+          <Col lg={4}>
+            <p>{t('Uploaded file:')} {file ? file.name : "None"}</p>
+          </Col>
+          <Col lg={4}>
+            <button className='button' type="button" onClick={handleUpload} disabled={!file || !language}>
+              {t('Upload')}
+            </button>
+
+          </Col>
+        </Row>
+        <Row >
+          <Col xs={12} className='mb-4'>
+            <Radios options={options} selectedOption={language} onOptionChange={handleLanguageChange} />
+          </Col>
+          <Col xs={12} >
+            <p>{t('Selected Language :')}{language}</p>
+          </Col>
+        </Row>
+
+        {translatedData && <div>
+          <Row>
+            <Col>
+              <div dangerouslySetInnerHTML={{ __html: translatedData.replace(/\n/g, '<br/>') }} />
+            </Col>
+          </Row>
+        </div>
+        }
+        <div className="singleContainer mt-3">
+          <Row style={{ height: '100vh' }}>
+            <Col lg={12}>
+              <div className='pager'>
+                <Col lg={2}>
+                  <button className='button' variant="primary" onClick={decrement}><GoTriangleLeft style={{ fontSize: "2rem" }} /></button>
+                </Col>
+                <Col lg={3}><p>{t('Current Page Number')} {count} / {t('Total Pages')} {totalPages}</p></Col>
+                <Col lg={2}> <button className='button' onClick={increment} disabled={count >= totalPages}><GoTriangleRight style={{ fontSize: "2rem" }} /></button></Col>
+                <Col lg={2}> <button className='button' >{t('Translate')}</button></Col>
+                {/* <Col lg={2}> <button className='button'>{t('jump')}</button></Col> */}
+                <Col lg={3}>
+                  <button className='button' onClick={() => handleJump()}>{t('Jump')}</button>
+                  <input
+                    type="text"
+                    placeholder={t('jump')}
+                    value={jumpToPage}
+                    onChange={(e) => setJumpToPage(e.target.value)}
+                    className='jump-to-page '
+                  />
+                </Col>
+
+              </div>
+              <div className='content mx-4 mt-2'>
+                {pdfData && pdfData[count - 1] && pdfData[count - 1].pageContent}
+              </div>
+            </Col>
+          </Row>
+        </div>
+
+        <div className='mt-5 mb-3'>
+          <Row>
+            <Col lg={12}>
+              <div className='pdfcontent'>
+                {isPdfVisible ? (
+                  <button className='button' onClick={togglePdfVisibility}>
+                    <GoTriangleUp style={{ fontSize: "2rem" }} />
+                  </button>
+                ) : (
+                  <button className='button' onClick={togglePdfVisibility}>
+                    <GoTriangleDown style={{ fontSize: "2rem" }} />
+                  </button>
+                )}
+                <label style={{ fontSize: "2rem" }}>SEE FULL PDF</label>
+              </div>
+              <div className='pdfscontent mt-2'>
+                {isPdfVisible && pdfData &&
+                  pdfData.map((doc, index) => (
+                    <Row key={index} >
+                      <Col>
+                        <div className="pdf-page-content" dangerouslySetInnerHTML={{ __html: doc.pageContent.replace(/\n/g, '') }} />
+                      </Col>
+                    </Row>
+                  ))}
+              </div>
+            </Col>
+          </Row>
+        </div>
 
 
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Ask')}>Submit</button>
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate('/Login')}>Submit</button>
-      <button className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={() => navigate("/Register")}>Submit</button>
-
-    </div>)
+      </div>
+    </div>
+  )
 }
 
 

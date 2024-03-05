@@ -68,7 +68,7 @@ button:focus-visible {
 } */
 h1 {
   font-size: 3.2em;
-  color: white;
+  color: rgb(0, 0, 0);
   line-height: 1.1;
 }
 .signup-container {
@@ -119,4 +119,3 @@ h1 {
   color: red;
   margin-bottom: 10px;
 }
-
