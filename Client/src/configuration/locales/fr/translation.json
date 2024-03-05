@@ -2,7 +2,7 @@
   "Welcome to Vevaar!": "Bienvenue chez Vevaar !",
   "Your free trial count:": "Votre essai gratuit :",
   "Shabdo ka saar hai vevaar...": "Le cœur de Vevaar, c'est les mots...",
-  "Free Trial": "Essai gratuit",
+  "Next": "Suivant",
   "Welcome To Langchain": "Bienvenue sur Langchain",
   "Upload": "Télécharger",
   "Uploaded file:": "Fichier téléchargé :",
@@ -25,5 +25,5 @@
   "Please enter a valid email and password": "Veuillez saisir une adresse e-mail et un mot de passe valides",
   "Error signing in with Google:": "Erreur lors de la connexion avec Google :",
   "Sign Up": "S'inscrire",
-  "Already have an account ! Register": "Vous avez déjà un compte ! S'inscrire"
+  "Already have an account ! Login": "Déjà un compte! Se connecter"
 }

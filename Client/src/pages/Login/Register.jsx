@@ -5,15 +5,14 @@ import { ToastContainer } from 'react-toastify';
 import { showCustomErrorToast } from '../../component/CustomToast';
 import { useTranslation, initReactI18next } from 'react-i18next'
 import i18n from '../../configuration/i18n';
-//core components
 import { app } from '../../authentication/Firebase';
 import './login.css';
-const auth = getAuth(app);
 import CustomWave from '../../component/CustomWave';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 initReactI18next.init(i18n)
+const auth = getAuth(app);
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -92,7 +91,7 @@ function Register() {
                 </div>
               </div>
               <div className="col-12 d-flex gap-2 flex-column justify-content-center mt-3 mt-md-5 text-center">
-                <a href='/Login' className="link-secondary text-decoration-none">{t('Already have an account ! Register')}</a>
+                <a href='/Login' className="link-secondary text-decoration-none">{t('Already have an account ! Login')}</a>
                 <label style={{ marginTop: 10, backgroundColor: 'white', color: 'black' }} type="button" onClick={signInWithGoogle}>
                   <FcGoogle style={{ fontSize: "2.5rem" }} />
                 </label>

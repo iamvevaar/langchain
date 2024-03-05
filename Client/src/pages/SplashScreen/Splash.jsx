@@ -11,7 +11,6 @@ const Splash = () => {
     const {t} = useTranslation();
     const navigate = useNavigate();
     const [selectedLanguage, setSelectedLanguage] = useState('lang');
-    const [count, setCount] = useState(0);
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
@@ -30,11 +29,8 @@ const Splash = () => {
         i18n.changeLanguage(lang)
     };
 
-    const handleCount = () => {
-        localStorage.setItem('count', 1);
-        setCount(1);
-        navigate('/Dashboard', { state: { count: 1 } })
-        console.log(count)
+    const handleNavigate = () => {
+        navigate('/Register')
     }
     useEffect(() => {
         const originalBackground = document.body.style.background;
@@ -48,9 +44,6 @@ const Splash = () => {
         <div style={{ height: "41.9rem", width: "100%", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
             <img src={image} alt="Description" style={{ width: '18rem', height: "18rem" }} />
-            <div>
-                <span style={{ color: "white" }}>{t('Your free trial count:')} {count}</span>
-            </div>
             <h1 style={{color : 'whitesmoke'}}>{t('Welcome to Vevaar!')}</h1> <br />
             <h4 style={{ color: "white" }}>{t('Shabdo ka saar hai vevaar...')}</h4> <br />
             <select value={selectedLanguage} onChange={handleLanguageChange} className="card-deck-dropdown">
@@ -69,7 +62,7 @@ const Splash = () => {
             </select>
             <br />
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
-                <button disabled={buttonDisabled} className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={handleCount}>{t('Free Trial')}</button>
+                <button disabled={buttonDisabled} className="btn btn-lg" style={{ backgroundColor: "#20df7f", color: "white", boxShadow: "0px 15px 10px -15px #111" }} onClick={handleNavigate}>{t('Next')}</button>
             </div>
         </div>
     );
