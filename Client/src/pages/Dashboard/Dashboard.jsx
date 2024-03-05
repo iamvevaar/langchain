@@ -118,7 +118,7 @@ const Dashboard = () => {
   // }, []);
 
   const [count, setCount] = useState(0);
-  const totalPages = pdfData?.[0]?.metadata?.pdf?.totalPages - 1 ;
+  const totalPages = pdfData?.[0]?.metadata?.pdf?.totalPages - 1 || 0;
   console.log(totalPages)
 
   const increment = () => {
@@ -166,6 +166,7 @@ const Dashboard = () => {
           <button onClick={decrement}>{t('Previous')}</button>
           <p>{t('Current Page Number')} {count+1} / {t('Total Pages')}</p>
           <button onClick={increment} disabled={count > totalPages} >{t('Next')}</button>
+          <button onClick={()=>{handleTranslation(pdfData[count]?.pageContent)}}>Translate</button>
         </div>
         <div className='content'>
           {pdfData && pdfData[count].pageContent}
@@ -178,7 +179,7 @@ const Dashboard = () => {
       {pdfData &&
         pdfData.map((doc, index) => (
           <div key={index}>
-            <h1>
+            <h1 style={{color:"black"}}>
               {t('Current Page Number')} {doc.metadata.loc.pageNumber} /{" "}
               {doc.metadata.pdf.totalPages}
             </h1>{" "}
